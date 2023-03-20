@@ -8,7 +8,6 @@ def svc_trainer(
     x_train: np.ndarray,
     y_train: np.ndarray
 ) -> SVC:
-    """"""
     model = SVC(
         gamma=0.001,
         random_state=42
