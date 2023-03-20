@@ -1,0 +1,5 @@
+enable_cache: False
+steps:
+  data_loader:
+    parameters:
+      test_size: 0.2
