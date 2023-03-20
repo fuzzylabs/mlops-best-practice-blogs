@@ -1,16 +1,13 @@
 import numpy as np 
 
-from sklearn.base import ClassifierMixin 
 from sklearn.svm import SVC 
-
 from zenml.steps import step
-
 
 @step 
 def svc_trainer(
     x_train: np.ndarray,
     y_train: np.ndarray
-) -> ClassifierMixin:
+) -> SVC:
     """"""
     model = SVC(
         gamma=0.001,
