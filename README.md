@@ -1,1 +1,1 @@
-# MLOps Best Practises - Blogs
+# MLOps Best Practices - Blogs

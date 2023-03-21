@@ -8,6 +8,7 @@ def data(data_parameters):
 
     return x_train, x_test, y_train, y_test
 
+
 @pytest.fixture
 def model(data):
     x_train, _, y_train, _ = data

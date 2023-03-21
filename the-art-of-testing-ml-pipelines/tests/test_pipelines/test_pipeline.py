@@ -17,38 +17,35 @@ from steps import (
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 EXPECTED_LENGTH = 1797
 
-@pytest.fixture
-def full_pipeline():
-    return training_pipeline
 
-
-@pytest.fixture
-def pipeline_configuration_path():
-    return BASE_DIR + '/test_pipeline_config.yaml'
-
-
-@pytest.fixture()
-def pipeline_run(full_pipeline, pipeline_configuration_path):
-    pipeline = full_pipeline(
+@pytest.fixture(scope='session')
+def pipeline_run():
+    pipeline = training_pipeline(
         digits_data_loader(),
         svc_trainer(),
         evaluator()
     )
 
     with disable_logging(log_level=logging.INFO):
-        pipeline.run(config_path=pipeline_configuration_path, unlisted=True)
+        pipeline.run(
+            onfig_path=BASE_DIR + '/test_pipeline_config.yaml', 
+            unlisted=True
+        )
 
+
+@pytest.fixture()
+def get_pipeline_run():
     return get_run(name='test-pipeline')
 
 
-def test_pipeline_executes(pipeline_run):
-    evaluator_result = pipeline_run.get_step(step='evaluator').output.read()
+def test_pipeline_executes(get_pipeline_run):
+    evaluator_result = get_pipeline_run.get_step(step='evaluator').output.read()
 
     assert evaluator_result == pytest.approx(0.95, rel=0.2)
 
 
-def test_pipeline_loads_and_splits_correctly(pipeline_run, data_parameters):
-    step_outputs = pipeline_run.get_step(step='data_loader').outputs
+def test_pipeline_loads_and_splits_correctly(get_pipeline_run, data_parameters):
+    step_outputs = get_pipeline_run.get_step(step='data_loader').outputs
     x_train = step_outputs['x_train'].read()
     x_test = step_outputs['x_test'].read()
     y_train = step_outputs['y_train'].read()
@@ -66,7 +63,7 @@ def test_pipeline_loads_and_splits_correctly(pipeline_run, data_parameters):
     assert len(y_train) == expected_size_train
 
 
-def test_correct_model_type(pipeline_run):
-    step_ouput = pipeline_run.get_step(step='trainer').output.read()
+def test_correct_model_type(get_pipeline_run):
+    step_ouput = get_pipeline_run.get_step(step='trainer').output.read()
 
     assert isinstance(step_ouput, SVC)

@@ -11,6 +11,7 @@ def test_correct_data_amount(data_parameters):
 
     assert (len(x_train) + len(x_test)) == EXPECTED_DATA_LENGTH
 
+
 def test_correct_split(data_parameters):
     x_train, x_test, y_train, y_test = digits_data_loader.entrypoint(data_parameters)
 
