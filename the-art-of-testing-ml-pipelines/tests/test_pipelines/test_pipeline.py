@@ -32,9 +32,11 @@ def pipeline_run():
             unlisted=True
         )
 
+
 @pytest.fixture()
 def get_pipeline_run():
     return get_run(name='test-pipeline')
+
 
 def test_pipeline_executes(get_pipeline_run):
     evaluator_result = get_pipeline_run.get_step(step='evaluator').output.read()
