@@ -7,7 +7,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = ">3.8,<3.11"
-zenml = {version = "0.35.1", extras = ["server"]}
+zenml = "0.42.0"
 
 
 [tool.poetry.group.test.dependencies]

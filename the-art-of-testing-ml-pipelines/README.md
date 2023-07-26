@@ -27,7 +27,6 @@ Once that's complete, you need to setup ZenML:
 ```bash
 poetry install
 poetry run zenml init
-poetry run zenml up
 poetry run zenml integration install sklearn -y
 poetry run zenml stack register zenml_testing_stack -a default -o default --set
 ```

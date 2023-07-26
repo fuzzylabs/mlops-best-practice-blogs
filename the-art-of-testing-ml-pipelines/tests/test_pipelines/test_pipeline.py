@@ -20,17 +20,9 @@ EXPECTED_LENGTH = 1797
 
 @pytest.fixture(scope='session')
 def pipeline_run():
-    pipeline = training_pipeline(
-        digits_data_loader(),
-        svc_trainer(),
-        evaluator()
-    )
-
     with disable_logging(log_level=logging.INFO):
-        pipeline.run(
-            onfig_path=BASE_DIR + '/test_pipeline_config.yaml', 
-            unlisted=True
-        )
+        pipeline = training_pipeline.with_options(config_path=BASE_DIR + '/test_pipeline_config.yaml')
+        pipeline(unlisted=True)
 
 
 @pytest.fixture()
@@ -51,8 +43,8 @@ def test_pipeline_loads_and_splits_correctly(get_pipeline_run, data_parameters):
     y_train = step_outputs['y_train'].read()
     y_test = step_outputs['y_test'].read()
 
-    expected_size_test = ceil(EXPECTED_LENGTH * data_parameters.test_size)
-    expected_size_train = int(EXPECTED_LENGTH * (1 - data_parameters.test_size))
+    expected_size_test = ceil(EXPECTED_LENGTH * data_parameters['test_size'])
+    expected_size_train = int(EXPECTED_LENGTH * (1 - data_parameters['test_size']))
 
     assert (len(x_train) + len(x_test)) == EXPECTED_LENGTH
     

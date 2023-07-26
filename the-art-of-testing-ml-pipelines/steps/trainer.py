@@ -1,7 +1,8 @@
 import numpy as np 
 
 from sklearn.svm import SVC 
-from zenml.steps import step
+from zenml import step
+
 
 @step 
 def svc_trainer(
