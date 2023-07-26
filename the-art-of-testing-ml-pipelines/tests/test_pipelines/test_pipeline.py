@@ -8,11 +8,7 @@ from zenml.logger import disable_logging
 from zenml.post_execution import get_run
 
 from pipelines import training_pipeline
-from steps import (
-    digits_data_loader, 
-    svc_trainer, 
-    evaluator
-)
+
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 EXPECTED_LENGTH = 1797
